@@ -61,7 +61,7 @@ public class Board {
         return placed;
     }
 
-    public void moveActive() {
+    public boolean moveActive() {
         if (this.activePiece.canMoveDown()) {
 
             // Clear old coordinates
@@ -77,14 +77,23 @@ public class Board {
                 this.matrix[co[1]][co[0]] = this.activePiece.getId();
             }
 
+            return true;
+
         } else {
 
             Tetromino[] possible = Tetromino.values();
             Random r = new Random();
             Tetromino next = possible[r.nextInt(possible.length)];
-            this.addPiece(new Piece(next, this.currentId, this));
+            boolean res = this.addPiece(new Piece(next, this.currentId, this));
             this.currentId++;
 
+            return res;
+
         }
+    }
+
+    public boolean tick() {
+        System.out.println(this.currentId);
+        return this.moveActive();
     }
 }
