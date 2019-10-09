@@ -11,6 +11,7 @@ public class Board {
     // then we need two extra columns and an extra row for -1
 
     private int[][] matrix;
+    private ArrayList<Piece> pieces;
 
     public Board() {
         this.matrix = new int[24][12];
@@ -25,9 +26,27 @@ public class Board {
             this.matrix[i][0] = -1;
             this.matrix[i][this.matrix[i].length - 1] = -1;
         }
+
+        this.pieces = new ArrayList<Piece>();
     }
 
     public int[][] getMatrix() {
         return this.matrix;
+    }
+
+    public boolean addPiece(Piece piece) {
+
+        boolean placed = true;
+        this.pieces.add(piece);
+
+        for (int[] coordinate : piece.getCoordinates()) {
+            if (this.matrix[coordinate[1]][coordinate[0]] != 0) {
+                placed = false;
+            } else {
+                this.matrix[coordinate[1]][coordinate[0]] = piece.getId();
+            }
+        }
+
+        return placed;
     }
 }

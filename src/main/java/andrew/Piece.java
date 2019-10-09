@@ -8,12 +8,68 @@ public class Piece {
     private int id;
     private ArrayList<int[]> coordinates;
 
-    public Piece(ArrayList<int[]> coordinates) {
+    public Piece(ArrayList<int[]> coordinates, int id, Board board) {
         this.coordinates = coordinates;
+        this.id = id;
+        this.board = board;
+    }
+
+    public Piece(Tetromino shape, int id, Board board) {
+        this.id = id;
+        this.board = board;
+        this.coordinates = new ArrayList<int[]>();
+
+        int boardMiddle = this.board.getMatrix()[0].length / 2;
+
+        if (shape == Tetromino.Line) {
+
+            // Horizontal line
+            this.coordinates.add(new int[] {boardMiddle - 2, 4});
+            this.coordinates.add(new int[] {boardMiddle - 1, 4});
+            this.coordinates.add(new int[] {boardMiddle, 4});
+            this.coordinates.add(new int[] {boardMiddle + 1, 4});
+
+        } else if (shape == Tetromino.L) {
+
+            // Long part horizontal, nub pointing up
+            this.coordinates.add(new int[] {boardMiddle - 1, 4});
+            this.coordinates.add(new int[] {boardMiddle, 4});
+            this.coordinates.add(new int[] {boardMiddle + 1, 4});
+            this.coordinates.add(new int[] {boardMiddle + 1, 3});
+
+        } else if (shape == Tetromino.MirroredL) {
+
+            // Long part horizontal, nub pointing up
+            this.coordinates.add(new int[] {boardMiddle - 1, 4});
+            this.coordinates.add(new int[] {boardMiddle, 4});
+            this.coordinates.add(new int[] {boardMiddle + 1, 4});
+            this.coordinates.add(new int[] {boardMiddle - 1, 3});
+            
+        } else if (shape == Tetromino.Square) {
+
+            // It's a square
+            this.coordinates.add(new int[] {boardMiddle - 1, 4});
+            this.coordinates.add(new int[] {boardMiddle - 1, 3});
+            this.coordinates.add(new int[] {boardMiddle, 4});
+            this.coordinates.add(new int[] {boardMiddle, 3});
+            
+        } else if (shape == Tetromino.S) {
+
+            // Lying down
+            this.coordinates.add(new int[] {boardMiddle - 1, 4});
+            this.coordinates.add(new int[] {boardMiddle, 4});
+            this.coordinates.add(new int[] {boardMiddle, 3});
+            this.coordinates.add(new int[] {boardMiddle + 1, 3});
+            
+        } 
     }
 
     public ArrayList<int[]> getCoordinates() {
         return this.coordinates;
+    }
+
+    public int getId() {
+        return this.id;
     }
 
     public boolean rotate() {
