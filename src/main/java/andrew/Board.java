@@ -45,12 +45,17 @@ public class Board {
         this.pieces.add(piece);
         this.activePiece = piece;
 
-        for (int[] coordinate : piece.getCoordinates()) {
-            if (this.matrix[coordinate[1]][coordinate[0]] != 0) {
-                placed = false;
-            } else {
-                this.matrix[coordinate[1]][coordinate[0]] = piece.getId();
+        try {
+            for (int[] coordinate : piece.getCoordinates()) {
+                if (this.matrix[coordinate[1]][coordinate[0]] != 0) {
+                    placed = false;
+                    break;
+                } else {
+                    this.matrix[coordinate[1]][coordinate[0]] = piece.getId();
+                }
             }
+        } catch (IndexOutOfBoundsException e) {
+            placed = false;
         }
 
         return placed;
@@ -79,7 +84,7 @@ public class Board {
             Tetromino next = possible[r.nextInt(possible.length)];
             this.addPiece(new Piece(next, this.currentId, this));
             this.currentId++;
-            
+
         }
     }
 }

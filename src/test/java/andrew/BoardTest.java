@@ -5,6 +5,7 @@ package andrew;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+import java.util.ArrayList;
 
 public class BoardTest {
 
@@ -14,5 +15,27 @@ public class BoardTest {
         Piece p = new Piece(Tetromino.Line, 1, b);
 
         assertTrue(b.addPiece(p));
+    }
+
+    @Test
+    public void addPieceOutOfBounds() {
+        Board b = new Board();
+        ArrayList<int[]> coordinates = new ArrayList<int[]>();
+        coordinates.add(new int[] {10, 29});
+        coordinates.add(new int[] {2, 29});
+        coordinates.add(new int[] {194, 29});
+        Piece p = new Piece(coordinates, 1, b);
+
+        assertFalse(b.addPiece(p));
+    }
+
+    @Test
+    public void addPieceCollision() {
+        Board b = new Board();
+        Piece p1 = new Piece(Tetromino.Line, 1, b);
+        Piece p2 = new Piece(Tetromino.Line, 2, b);
+
+        assertTrue(b.addPiece(p1));
+        assertFalse(b.addPiece(p2));
     }
 }
