@@ -1,17 +1,20 @@
 package andrew;
 
 import java.util.ArrayList;
+import java.awt.Color;
 
 public class Piece {
 
     private Board board;
     private int id;
     private ArrayList<int[]> coordinates;
+    private Color color;
 
     public Piece(ArrayList<int[]> coordinates, int id, Board board) {
         this.coordinates = coordinates;
         this.id = id;
         this.board = board;
+        this.color = Color.green;
     }
 
     public Piece(Tetromino shape, int id, Board board) {
@@ -28,6 +31,7 @@ public class Piece {
             this.coordinates.add(new int[] {boardMiddle - 1, 4});
             this.coordinates.add(new int[] {boardMiddle, 4});
             this.coordinates.add(new int[] {boardMiddle + 1, 4});
+            this.color = Color.cyan;
 
         } else if (shape == Tetromino.L) {
 
@@ -36,6 +40,7 @@ public class Piece {
             this.coordinates.add(new int[] {boardMiddle, 4});
             this.coordinates.add(new int[] {boardMiddle + 1, 4});
             this.coordinates.add(new int[] {boardMiddle + 1, 3});
+            this.color = Color.orange;
 
         } else if (shape == Tetromino.MirroredL) {
 
@@ -44,6 +49,7 @@ public class Piece {
             this.coordinates.add(new int[] {boardMiddle, 4});
             this.coordinates.add(new int[] {boardMiddle + 1, 4});
             this.coordinates.add(new int[] {boardMiddle - 1, 3});
+            this.color = Color.blue;
             
         } else if (shape == Tetromino.Square) {
 
@@ -52,6 +58,7 @@ public class Piece {
             this.coordinates.add(new int[] {boardMiddle - 1, 3});
             this.coordinates.add(new int[] {boardMiddle, 4});
             this.coordinates.add(new int[] {boardMiddle, 3});
+            this.color = Color.yellow;
             
         } else if (shape == Tetromino.S) {
 
@@ -60,6 +67,7 @@ public class Piece {
             this.coordinates.add(new int[] {boardMiddle, 4});
             this.coordinates.add(new int[] {boardMiddle, 3});
             this.coordinates.add(new int[] {boardMiddle + 1, 3});
+            this.color = Color.green;
             
         } 
     }

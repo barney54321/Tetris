@@ -3,6 +3,8 @@ package andrew;
 import java.util.ArrayList;
 import java.util.Random;
 import java.awt.Graphics;
+import java.awt.Color;
+import java.awt.Font;
 
 public class Board {
 
@@ -32,7 +34,7 @@ public class Board {
         }
 
         this.pieces = new ArrayList<Piece>();
-        this.currentId = 1;
+        this.currentId = 2;
         this.activePiece = null;
     }
 
@@ -93,12 +95,27 @@ public class Board {
         }
     }
 
-    public boolean tick() {
+    public void tick() {
         System.out.println(this.currentId);
-        return this.moveActive();
+        this.moveActive();
     }
 
     public void render(Graphics g) {
+        g.setColor(Color.white);
+        Font fnt = new Font("arial",1,60);
+        g.setFont(fnt);
+        g.drawString("Tetris", 55, 50);
 
+        // Draw board
+        for (int i = 0; i < 20; i++) {
+            for (int j = 0; j < 10; j++) {
+                g.setColor(Color.white);
+                g.drawRect(40 + 20 * j, 60 + 20 * i, 20, 20);
+                if (this.matrix[i + 3][j + 1] != 0) {
+                    g.setColor(Color.green);
+                    g.fillRect(41 + 20 * j, 61 + 20 * i, 17, 17);
+                }
+            }
+        }
     }
 }

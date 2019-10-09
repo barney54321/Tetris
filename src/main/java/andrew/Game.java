@@ -45,7 +45,7 @@ public class Game extends Canvas implements Runnable {
 	public void run() {
 		this.requestFocus();
 		long lastTime = System.nanoTime();
-		double amountOfTicks = 60.0;
+		double amountOfTicks = 5.0;
 		double ns = 1000000000 / amountOfTicks;
 		double delta = 0;
 		long timer = System.currentTimeMillis();
@@ -73,10 +73,10 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	private void tick() {
-
+        this.board.tick();
 	}
 
-	private void render() { // Renders the window
+	private void render() {
 		BufferStrategy bs = this.getBufferStrategy();
 		if(bs == null) {
 			this.createBufferStrategy(3);
