@@ -27,49 +27,53 @@ public class Piece {
         if (shape == Tetromino.Line) {
 
             // Horizontal line
-            this.coordinates.add(new int[] {boardMiddle - 2, 4});
-            this.coordinates.add(new int[] {boardMiddle - 1, 4});
-            this.coordinates.add(new int[] {boardMiddle, 4});
-            this.coordinates.add(new int[] {boardMiddle + 1, 4});
+            this.coordinates.add(new int[] {boardMiddle - 2, 3});
+            this.coordinates.add(new int[] {boardMiddle - 1, 3});
+            this.coordinates.add(new int[] {boardMiddle, 3});
+            this.coordinates.add(new int[] {boardMiddle + 1, 3});
             this.color = Color.cyan;
 
         } else if (shape == Tetromino.L) {
 
             // Long part horizontal, nub pointing up
-            this.coordinates.add(new int[] {boardMiddle - 1, 4});
-            this.coordinates.add(new int[] {boardMiddle, 4});
-            this.coordinates.add(new int[] {boardMiddle + 1, 4});
+            this.coordinates.add(new int[] {boardMiddle - 1, 3});
+            this.coordinates.add(new int[] {boardMiddle, 3});
             this.coordinates.add(new int[] {boardMiddle + 1, 3});
+            this.coordinates.add(new int[] {boardMiddle + 1, 2});
             this.color = Color.orange;
 
         } else if (shape == Tetromino.MirroredL) {
 
             // Long part horizontal, nub pointing up
-            this.coordinates.add(new int[] {boardMiddle - 1, 4});
-            this.coordinates.add(new int[] {boardMiddle, 4});
-            this.coordinates.add(new int[] {boardMiddle + 1, 4});
             this.coordinates.add(new int[] {boardMiddle - 1, 3});
+            this.coordinates.add(new int[] {boardMiddle, 3});
+            this.coordinates.add(new int[] {boardMiddle + 1, 3});
+            this.coordinates.add(new int[] {boardMiddle - 1, 2});
             this.color = Color.blue;
             
         } else if (shape == Tetromino.Square) {
 
             // It's a square
-            this.coordinates.add(new int[] {boardMiddle - 1, 4});
             this.coordinates.add(new int[] {boardMiddle - 1, 3});
-            this.coordinates.add(new int[] {boardMiddle, 4});
+            this.coordinates.add(new int[] {boardMiddle - 1, 2});
             this.coordinates.add(new int[] {boardMiddle, 3});
+            this.coordinates.add(new int[] {boardMiddle, 2});
             this.color = Color.yellow;
             
         } else if (shape == Tetromino.S) {
 
             // Lying down
-            this.coordinates.add(new int[] {boardMiddle - 1, 4});
-            this.coordinates.add(new int[] {boardMiddle, 4});
+            this.coordinates.add(new int[] {boardMiddle - 1, 3});
             this.coordinates.add(new int[] {boardMiddle, 3});
-            this.coordinates.add(new int[] {boardMiddle + 1, 3});
+            this.coordinates.add(new int[] {boardMiddle, 2});
+            this.coordinates.add(new int[] {boardMiddle + 1, 2});
             this.color = Color.green;
             
         } 
+    }
+
+    public Color getColor() {
+        return this.color;
     }
 
     public ArrayList<int[]> getCoordinates() {

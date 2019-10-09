@@ -46,10 +46,10 @@ public class PieceTest {
 
         ArrayList<int[]> coordinates = new ArrayList<int[]>();
         int boardMiddle = b.getMatrix()[0].length / 2;
-        coordinates.add(new int[] {boardMiddle - 2, 4});
-        coordinates.add(new int[] {boardMiddle - 1, 4});
-        coordinates.add(new int[] {boardMiddle, 4});
-        coordinates.add(new int[] {boardMiddle + 1, 4});
+        coordinates.add(new int[] {boardMiddle - 2, 3});
+        coordinates.add(new int[] {boardMiddle - 1, 3});
+        coordinates.add(new int[] {boardMiddle, 3});
+        coordinates.add(new int[] {boardMiddle + 1, 3});
 
         assertTrue(checkLists(coordinates, p.getCoordinates()));
     }
@@ -61,10 +61,10 @@ public class PieceTest {
 
         ArrayList<int[]> coordinates = new ArrayList<int[]>();
         int boardMiddle = b.getMatrix()[0].length / 2;
-        coordinates.add(new int[] {boardMiddle - 1, 4});
-        coordinates.add(new int[] {boardMiddle, 4});
-        coordinates.add(new int[] {boardMiddle + 1, 4});
+        coordinates.add(new int[] {boardMiddle - 1, 3});
+        coordinates.add(new int[] {boardMiddle, 3});
         coordinates.add(new int[] {boardMiddle + 1, 3});
+        coordinates.add(new int[] {boardMiddle + 1, 2});
 
         assertTrue(checkLists(coordinates, p.getCoordinates()));
     }
@@ -76,10 +76,10 @@ public class PieceTest {
 
         ArrayList<int[]> coordinates = new ArrayList<int[]>();
         int boardMiddle = b.getMatrix()[0].length / 2;
-        coordinates.add(new int[] {boardMiddle - 1, 4});
-        coordinates.add(new int[] {boardMiddle, 4});
-        coordinates.add(new int[] {boardMiddle + 1, 4});
         coordinates.add(new int[] {boardMiddle - 1, 3});
+        coordinates.add(new int[] {boardMiddle, 3});
+        coordinates.add(new int[] {boardMiddle + 1, 3});
+        coordinates.add(new int[] {boardMiddle - 1, 2});
 
         assertTrue(checkLists(coordinates, p.getCoordinates()));
     }
@@ -91,10 +91,10 @@ public class PieceTest {
 
         ArrayList<int[]> coordinates = new ArrayList<int[]>();
         int boardMiddle = b.getMatrix()[0].length / 2;
-        coordinates.add(new int[] {boardMiddle - 1, 4});
         coordinates.add(new int[] {boardMiddle - 1, 3});
-        coordinates.add(new int[] {boardMiddle, 4});
+        coordinates.add(new int[] {boardMiddle - 1, 2});
         coordinates.add(new int[] {boardMiddle, 3});
+        coordinates.add(new int[] {boardMiddle, 2});
 
         assertTrue(checkLists(coordinates, p.getCoordinates()));
     }
@@ -106,10 +106,10 @@ public class PieceTest {
 
         ArrayList<int[]> coordinates = new ArrayList<int[]>();
         int boardMiddle = b.getMatrix()[0].length / 2;
-        coordinates.add(new int[] {boardMiddle - 1, 4});
-        coordinates.add(new int[] {boardMiddle, 4});
+        coordinates.add(new int[] {boardMiddle - 1, 3});
         coordinates.add(new int[] {boardMiddle, 3});
-        coordinates.add(new int[] {boardMiddle + 1, 3});
+        coordinates.add(new int[] {boardMiddle, 2});
+        coordinates.add(new int[] {boardMiddle + 1, 2});
 
         assertTrue(checkLists(coordinates, p.getCoordinates()));
     }

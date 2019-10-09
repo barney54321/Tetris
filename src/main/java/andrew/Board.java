@@ -5,6 +5,7 @@ import java.util.Random;
 import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.Font;
+import java.util.HashMap;
 
 public class Board {
 
@@ -18,6 +19,7 @@ public class Board {
     private ArrayList<Piece> pieces;
     private Piece activePiece;
     private int currentId;
+    private HashMap<Integer, Piece> pieceMap;
 
     public Board() {
         this.matrix = new int[24][12];
@@ -36,6 +38,7 @@ public class Board {
         this.pieces = new ArrayList<Piece>();
         this.currentId = 2;
         this.activePiece = null;
+        this.pieceMap = new HashMap<Integer, Piece>();
     }
 
     public int[][] getMatrix() {
@@ -47,6 +50,7 @@ public class Board {
         boolean placed = true;
         this.pieces.add(piece);
         this.activePiece = piece;
+        this.pieceMap.put(piece.getId(), piece);
 
         try {
             for (int[] coordinate : piece.getCoordinates()) {
@@ -96,8 +100,9 @@ public class Board {
     }
 
     public void tick() {
-        System.out.println(this.currentId);
-        this.moveActive();
+        if (!this.moveActive()) {
+            this.reset();
+        }
     }
 
     public void render(Graphics g) {
@@ -112,10 +117,31 @@ public class Board {
                 g.setColor(Color.white);
                 g.drawRect(40 + 20 * j, 60 + 20 * i, 20, 20);
                 if (this.matrix[i + 3][j + 1] != 0) {
-                    g.setColor(Color.green);
+                    g.setColor(this.pieceMap.get(this.matrix[i + 3][j + 1]).getColor());
                     g.fillRect(41 + 20 * j, 61 + 20 * i, 17, 17);
                 }
             }
         }
+    }
+
+    public void reset() {
+         this.matrix = new int[24][12];
+
+        // Set bottom row as -1
+        for (int i = 0; i < this.matrix[this.matrix.length - 1].length; i++) {
+            this.matrix[this.matrix.length - 1][i] = -1;
+        }
+
+        // Set left and right columns as -1
+        for (int i = 0; i < this.matrix.length; i++) {
+            this.matrix[i][0] = -1;
+            this.matrix[i][this.matrix[i].length - 1] = -1;
+        }
+
+        this.pieces = new ArrayList<Piece>();
+        this.currentId = 2;
+        this.activePiece = null;
+        this.pieceMap = new HashMap<Integer, Piece>();
+        this.addPiece(new Piece(Tetromino.Line, 1, this));
     }
 }
