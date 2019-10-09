@@ -2,6 +2,7 @@ package andrew;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.awt.Graphics;
 
 public class Board {
 
@@ -95,5 +96,9 @@ public class Board {
     public boolean tick() {
         System.out.println(this.currentId);
         return this.moveActive();
+    }
+
+    public void render(Graphics g) {
+
     }
 }
