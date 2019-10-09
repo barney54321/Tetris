@@ -1,6 +1,7 @@
 package andrew;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Board {
 
@@ -12,6 +13,8 @@ public class Board {
 
     private int[][] matrix;
     private ArrayList<Piece> pieces;
+    private Piece activePiece;
+    private int currentId;
 
     public Board() {
         this.matrix = new int[24][12];
@@ -28,6 +31,8 @@ public class Board {
         }
 
         this.pieces = new ArrayList<Piece>();
+        this.currentId = 1;
+        this.activePiece = null;
     }
 
     public int[][] getMatrix() {
@@ -38,6 +43,7 @@ public class Board {
 
         boolean placed = true;
         this.pieces.add(piece);
+        this.activePiece = piece;
 
         for (int[] coordinate : piece.getCoordinates()) {
             if (this.matrix[coordinate[1]][coordinate[0]] != 0) {
@@ -48,5 +54,32 @@ public class Board {
         }
 
         return placed;
+    }
+
+    public void moveActive() {
+        if (this.activePiece.canMoveDown()) {
+
+            // Clear old coordinates
+            for (int[] co : this.activePiece.getCoordinates()) {
+                this.matrix[co[1]][co[0]] = 0;
+            }
+
+            // Move down
+            this.activePiece.moveDown();
+
+            // Adjust matrix
+            for (int[] co : this.activePiece.getCoordinates()) {
+                this.matrix[co[1]][co[0]] = this.activePiece.getId();
+            }
+
+        } else {
+
+            Tetromino[] possible = Tetromino.values();
+            Random r = new Random();
+            Tetromino next = possible[r.nextInt(possible.length)];
+            this.addPiece(new Piece(next, this.currentId, this));
+            this.currentId++;
+            
+        }
     }
 }

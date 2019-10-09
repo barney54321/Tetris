@@ -120,4 +120,10 @@ public class Piece {
 
         return canMove;
     }
+
+    public void moveDown() {
+        for (int[] co : this.coordinates) {
+            co[1]++;
+        }
+    }
 }
