@@ -152,10 +152,10 @@ public class PieceTest {
 
         ArrayList<int[]> coordinates = new ArrayList<int[]>();
         int boardMiddle = b.getMatrix()[0].length / 2;
-        coordinates.add(new int[] {boardMiddle - 1, 5});
-        coordinates.add(new int[] {boardMiddle, 5});
+        coordinates.add(new int[] {boardMiddle - 1, 4});
         coordinates.add(new int[] {boardMiddle, 4});
-        coordinates.add(new int[] {boardMiddle + 1, 4});
+        coordinates.add(new int[] {boardMiddle, 3});
+        coordinates.add(new int[] {boardMiddle + 1, 3});
 
         assertTrue(checkLists(coordinates, p.getCoordinates()));
     }

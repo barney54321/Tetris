@@ -8,15 +8,13 @@ import javax.swing.*;
 
 public class Game extends Canvas implements Runnable {
 
-    private Board board;
-
     private static final long serialVersionUID = 1550691097823471818L; // This is required
-
 	public static final int WIDTH = 300, HEIGHT = 500; // Sets up window width and height
 
 	private Thread thread;
 
 	private boolean running = false; // boolean to check if game is running
+    private Board board;
 
 	public Game() {
 
@@ -24,7 +22,7 @@ public class Game extends Canvas implements Runnable {
 
         this.board = new Board();
         this.board.addPiece(new Piece(Tetromino.Line, 1, this.board));
-
+        this.addKeyListener(new KeyInput(this.board));
 	}
 
 	public synchronized void start() {

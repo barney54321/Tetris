@@ -138,4 +138,16 @@ public class Piece {
             co[1]++;
         }
     }
+
+    public void moveLeft() {
+        for (int[] co : this.coordinates) {
+            co[0]--;
+        }
+    }
+
+    public void moveRight() {
+        for (int[] co : this.coordinates) {
+            co[0]++;
+        }
+    }
 }

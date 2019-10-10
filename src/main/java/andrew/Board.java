@@ -99,6 +99,40 @@ public class Board {
         }
     }
 
+    public void moveLeft() {
+
+         // Clear old coordinates
+        for (int[] co : this.activePiece.getCoordinates()) {
+            this.matrix[co[1]][co[0]] = 0;
+        }
+
+        // Move down
+        this.activePiece.moveLeft();
+
+        // Adjust matrix
+        for (int[] co : this.activePiece.getCoordinates()) {
+            this.matrix[co[1]][co[0]] = this.activePiece.getId();
+        }
+
+    }
+
+    public void moveRight() {
+
+         // Clear old coordinates
+        for (int[] co : this.activePiece.getCoordinates()) {
+            this.matrix[co[1]][co[0]] = 0;
+        }
+
+        // Move down
+        this.activePiece.moveRight();
+
+        // Adjust matrix
+        for (int[] co : this.activePiece.getCoordinates()) {
+            this.matrix[co[1]][co[0]] = this.activePiece.getId();
+        }
+
+    }
+
     public void tick() {
         if (!this.moveActive()) {
             this.reset();
@@ -125,6 +159,7 @@ public class Board {
     }
 
     public void reset() {
+
          this.matrix = new int[24][12];
 
         // Set bottom row as -1
@@ -143,5 +178,24 @@ public class Board {
         this.activePiece = null;
         this.pieceMap = new HashMap<Integer, Piece>();
         this.addPiece(new Piece(Tetromino.Line, 1, this));
+
     }
+
+    public void input(InputType key) {
+
+        if (this.activePiece != null) {
+
+            if (key == InputType.Left) {
+                if (this.activePiece.canMoveLeft()) {
+                    this.moveLeft();
+                }
+            } else if (key == InputType.Right) {
+                if (this.activePiece.canMoveLeft()) {
+                    this.moveRight();
+                }
+            }
+
+        }
+    }
+
 }
