@@ -101,7 +101,7 @@ public class Board {
 
     public void moveLeft() {
 
-         // Clear old coordinates
+        // Clear old coordinates
         for (int[] co : this.activePiece.getCoordinates()) {
             this.matrix[co[1]][co[0]] = 0;
         }
@@ -190,7 +190,7 @@ public class Board {
                     this.moveLeft();
                 }
             } else if (key == InputType.Right) {
-                if (this.activePiece.canMoveLeft()) {
+                if (this.activePiece.canMoveRight()) {
                     this.moveRight();
                 }
             }
