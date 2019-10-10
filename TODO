@@ -1,4 +1,6 @@
-Make tests for everything
+Test rotations
+Test moving left and right
+Test colours
 Remove pieces from memory when all blocks are cleared
 Show score
 Improve UI
@@ -6,3 +8,4 @@ Create start screen
 Create pause system
 Music?
 Increase game speed over time
+Add more piece types
