@@ -69,7 +69,14 @@ public class Board {
     }
 
     public boolean moveActive() {
+
         if (this.activePiece.canMoveDown()) {
+
+            // Save copy of old coordinates
+            ArrayList<int[]> old = new ArrayList<int[]>();
+            for (int[] co : this.activePiece.getCoordinates()) {
+                old.add(new int[] {co[0], co[1]});
+            }
 
             // Clear old coordinates
             for (int[] co : this.activePiece.getCoordinates()) {
@@ -84,19 +91,26 @@ public class Board {
                 this.matrix[co[1]][co[0]] = this.activePiece.getId();
             }
 
-            return true;
-
-        } else {
-
-            Tetromino[] possible = Tetromino.values();
-            Random r = new Random();
-            Tetromino next = possible[r.nextInt(possible.length)];
-            boolean res = this.addPiece(new Piece(next, this.currentId, this));
-            this.currentId++;
-
-            return res;
+            // Check to see if coordinates have changed
+            boolean changed = false;
+            for (int i = 0; i < old.size(); i++) {
+                if (old.get(i)[0] != this.activePiece.getCoordinates().get(i)[0]) {
+                    return true;
+                } else if (old.get(i)[1] != this.activePiece.getCoordinates().get(i)[1]) {
+                    return true;
+                }
+            }
 
         }
+
+        Tetromino[] possible = Tetromino.values();
+        Random r = new Random();
+        Tetromino next = possible[r.nextInt(possible.length)];
+        boolean res = this.addPiece(new Piece(next, this.currentId, this));
+        this.currentId++;
+
+        return res;
+
     }
 
     public void moveLeft() {
@@ -174,6 +188,7 @@ public class Board {
     }
 
     public void render(Graphics g) {
+
         g.setColor(Color.white);
         Font fnt = new Font("arial",1,60);
         g.setFont(fnt);
@@ -190,6 +205,7 @@ public class Board {
                 }
             }
         }
+
     }
 
     public void reset() {
@@ -238,6 +254,7 @@ public class Board {
             }
 
         }
+
     }
 
 }
