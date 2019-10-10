@@ -187,11 +187,35 @@ public class Piece {
     }
 
     public void rotateClockwise() {
+
+        this.coordinates = this.computeRotationClockwise();
+
+        if (this.orientation == Direction.North) {
+            this.orientation = Direction.East;
+        } else if (this.orientation == Direction.East) {
+            this.orientation = Direction.South;
+        } else if (this.orientation == Direction.South) {
+            this.orientation = Direction.West;
+        } else if (this.orientation == Direction.West) {
+            this.orientation = Direction.North;
+        } 
         
     }
 
     public void rotateAntiClockwise() {
         
+        this.coordinates = this.computeRotationAntiClockwise();
+
+        if (this.orientation == Direction.North) {
+            this.orientation = Direction.West;
+        } else if (this.orientation == Direction.East) {
+            this.orientation = Direction.North;
+        } else if (this.orientation == Direction.South) {
+            this.orientation = Direction.East;
+        } else if (this.orientation == Direction.West) {
+            this.orientation = Direction.South;
+        } 
+
     }
 
     private ArrayList<int[]> computeRotationClockwise() {
