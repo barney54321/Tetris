@@ -106,7 +106,7 @@ public class Board {
             this.matrix[co[1]][co[0]] = 0;
         }
 
-        // Move down
+        // Move left
         this.activePiece.moveLeft();
 
         // Adjust matrix
@@ -123,8 +123,42 @@ public class Board {
             this.matrix[co[1]][co[0]] = 0;
         }
 
-        // Move down
+        // Move right
         this.activePiece.moveRight();
+
+        // Adjust matrix
+        for (int[] co : this.activePiece.getCoordinates()) {
+            this.matrix[co[1]][co[0]] = this.activePiece.getId();
+        }
+
+    }
+
+    public void rotateClockwise() {
+
+        // Clear old coordinates
+        for (int[] co : this.activePiece.getCoordinates()) {
+            this.matrix[co[1]][co[0]] = 0;
+        }
+
+        // Rotate clockwise
+        this.activePiece.rotateClockwise();
+
+        // Adjust matrix
+        for (int[] co : this.activePiece.getCoordinates()) {
+            this.matrix[co[1]][co[0]] = this.activePiece.getId();
+        }
+
+    }
+
+    public void rotateAntiClockwise() {
+
+         // Clear old coordinates
+        for (int[] co : this.activePiece.getCoordinates()) {
+            this.matrix[co[1]][co[0]] = 0;
+        }
+
+        // Rotate anti-clockwise
+        this.activePiece.rotateAntiClockwise();
 
         // Adjust matrix
         for (int[] co : this.activePiece.getCoordinates()) {
@@ -192,6 +226,14 @@ public class Board {
             } else if (key == InputType.Right) {
                 if (this.activePiece.canMoveRight()) {
                     this.moveRight();
+                }
+            } else if (key == InputType.RotateLeft) {
+                if (this.activePiece.canRotateAntiClockwise()) {
+                    this.rotateAntiClockwise();
+                }
+            } else if (key == InputType.RotateRight) {
+                if (this.activePiece.canRotateClockwise()) {
+                    this.rotateClockwise();
                 }
             }
 

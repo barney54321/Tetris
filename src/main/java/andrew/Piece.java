@@ -9,18 +9,23 @@ public class Piece {
     private int id;
     private ArrayList<int[]> coordinates;
     private Color color;
+    private Direction orientation;
+    private Tetromino shape;
 
     public Piece(ArrayList<int[]> coordinates, int id, Board board) {
         this.coordinates = coordinates;
         this.id = id;
         this.board = board;
         this.color = Color.green;
+        this.orientation = Direction.North;
+        this.shape = Tetromino.None;
     }
 
     public Piece(Tetromino shape, int id, Board board) {
         this.id = id;
         this.board = board;
         this.coordinates = new ArrayList<int[]>();
+        this.orientation = Direction.North;
 
         int boardMiddle = this.board.getMatrix()[0].length / 2;
 
@@ -32,6 +37,8 @@ public class Piece {
             this.coordinates.add(new int[] {boardMiddle, 3});
             this.coordinates.add(new int[] {boardMiddle + 1, 3});
             this.color = Color.cyan;
+            this.shape = Tetromino.Line;
+            this.orientation = Direction.East; // I mucked up
 
         } else if (shape == Tetromino.L) {
 
@@ -41,6 +48,7 @@ public class Piece {
             this.coordinates.add(new int[] {boardMiddle + 1, 3});
             this.coordinates.add(new int[] {boardMiddle + 1, 2});
             this.color = Color.orange;
+            this.shape = Tetromino.L;
 
         } else if (shape == Tetromino.MirroredL) {
 
@@ -50,7 +58,8 @@ public class Piece {
             this.coordinates.add(new int[] {boardMiddle + 1, 3});
             this.coordinates.add(new int[] {boardMiddle - 1, 2});
             this.color = Color.blue;
-            
+            this.shape = Tetromino.MirroredL;
+
         } else if (shape == Tetromino.Square) {
 
             // It's a square
@@ -59,6 +68,7 @@ public class Piece {
             this.coordinates.add(new int[] {boardMiddle, 3});
             this.coordinates.add(new int[] {boardMiddle, 2});
             this.color = Color.yellow;
+            this.shape = Tetromino.Square;
             
         } else if (shape == Tetromino.S) {
 
@@ -68,6 +78,7 @@ public class Piece {
             this.coordinates.add(new int[] {boardMiddle, 2});
             this.coordinates.add(new int[] {boardMiddle + 1, 2});
             this.color = Color.green;
+            this.shape = Tetromino.S;
             
         } 
     }
@@ -82,10 +93,6 @@ public class Piece {
 
     public int getId() {
         return this.id;
-    }
-
-    public boolean rotate() {
-        return false;
     }
 
     public boolean canMoveDown() {
@@ -149,5 +156,309 @@ public class Piece {
         for (int[] co : this.coordinates) {
             co[0]++;
         }
+    }
+
+    public boolean canRotateClockwise() {
+        boolean canMove = true;
+
+        int[][] matrix = this.board.getMatrix();
+
+        for (int[] co : this.computeRotationClockwise()) {
+            if (matrix[co[1]][co[0] + 1] != 0 && matrix[co[1]][co[0] + 1] != this.id) {
+                canMove = false;
+            }
+        }
+
+        return canMove;
+    }
+
+    public boolean canRotateAntiClockwise() {
+        boolean canMove = true;
+
+        int[][] matrix = this.board.getMatrix();
+
+        for (int[] co : this.computeRotationAntiClockwise()) {
+            if (matrix[co[1]][co[0] + 1] != 0 && matrix[co[1]][co[0] + 1] != this.id) {
+                canMove = false;
+            }
+        }
+
+        return canMove;
+    }
+
+    public void rotateClockwise() {
+        
+    }
+
+    public void rotateAntiClockwise() {
+        
+    }
+
+    private ArrayList<int[]> computeRotationClockwise() {
+
+        ArrayList<int[]> res = new ArrayList<int[]>();
+
+        // Figure out the shape
+        if (this.shape == Tetromino.None) {
+
+            res = this.coordinates;
+
+        } else if (this.shape == Tetromino.Line) {
+
+            // Third element
+            int[] third = this.coordinates.get(2);
+
+            // Figure out the direction
+            if (this.orientation == Direction.North || this.orientation == Direction.South) {
+
+                res.add(new int[] {third[0] - 2, third[1]});
+                res.add(new int[] {third[0] - 1, third[1]});
+                res.add(new int[] {third[0], third[1]});
+                res.add(new int[] {third[0] + 1, third[1]});
+
+            } else {
+                
+                res.add(new int[] {third[0], third[1] - 2});
+                res.add(new int[] {third[0], third[1] - 1});
+                res.add(new int[] {third[0], third[1]});
+                res.add(new int[] {third[0], third[1] + 1});
+
+            }
+
+        } else if (this.shape == Tetromino.L) {
+
+            // Second element
+            int[] second = this.coordinates.get(1);
+
+            // Figure out the direction
+            if (this.orientation == Direction.North) {
+
+                res.add(new int[] {second[0], second[1] - 1});
+                res.add(new int[] {second[0], second[1]});
+                res.add(new int[] {second[0], second[1] + 1});
+                res.add(new int[] {second[0] + 1, second[1] + 1});
+
+            } else if (this.orientation == Direction.East) {
+
+                res.add(new int[] {second[0] - 1, second[1] + 1});
+                res.add(new int[] {second[0], second[1]});
+                res.add(new int[] {second[0] - 1, second[1]});
+                res.add(new int[] {second[0] + 1, second[1]});
+
+            } else if (this.orientation == Direction.South) {
+
+                res.add(new int[] {second[0] - 1, second[1] - 1});
+                res.add(new int[] {second[0], second[1]});
+                res.add(new int[] {second[0], second[1] - 1});
+                res.add(new int[] {second[0], second[1] + 1});
+
+            } else {
+
+                res.add(new int[] {second[0] - 1, second[1]});
+                res.add(new int[] {second[0], second[1]});
+                res.add(new int[] {second[0] + 1, second[1]});
+                res.add(new int[] {second[0] + 1, second[1] - 1});
+
+            }
+
+        } else if (this.shape == Tetromino.MirroredL) {
+
+            // Second element
+            int[] second = this.coordinates.get(1);
+
+            // Figure out the direction
+            if (this.orientation == Direction.North) {
+
+                res.add(new int[] {second[0], second[1] - 1});
+                res.add(new int[] {second[0], second[1]});
+                res.add(new int[] {second[0], second[1] + 1});
+                res.add(new int[] {second[0] + 1, second[1] - 1});
+
+            } else if (this.orientation == Direction.East) {
+
+                res.add(new int[] {second[0] + 1, second[1] + 1});
+                res.add(new int[] {second[0], second[1]});
+                res.add(new int[] {second[0] - 1, second[1]});
+                res.add(new int[] {second[0] + 1, second[1]});
+
+            } else if (this.orientation == Direction.South) {
+
+                res.add(new int[] {second[0] - 1, second[1] + 1});
+                res.add(new int[] {second[0], second[1]});
+                res.add(new int[] {second[0], second[1] - 1});
+                res.add(new int[] {second[0], second[1] + 1});
+
+            } else {
+
+                res.add(new int[] {second[0] - 1, second[1]});
+                res.add(new int[] {second[0], second[1]});
+                res.add(new int[] {second[0] + 1, second[1]});
+                res.add(new int[] {second[0] - 1, second[1] - 1});
+
+            }
+
+        } else if (this.shape == Tetromino.Square) {
+
+            res = this.coordinates;
+
+        } else if (this.shape == Tetromino.S) {
+
+            // Second element
+            int[] second = this.coordinates.get(1);
+
+            // Figure out the direction
+            if (this.orientation == Direction.North || this.orientation == Direction.South) {
+
+                res.add(new int[] {second[0], second[1] - 1});
+                res.add(new int[] {second[0], second[1]});
+                res.add(new int[] {second[0] + 1, second[1]});
+                res.add(new int[] {second[0] + 1, second[1] + 1});
+
+            } else {
+                
+                res.add(new int[] {second[0] - 1, second[1]});
+                res.add(new int[] {second[0], second[1]});
+                res.add(new int[] {second[0], second[1] - 1});
+                res.add(new int[] {second[0] + 1, second[1] - 1});
+
+            }
+
+        } 
+
+        return res;
+    }
+
+    private ArrayList<int[]> computeRotationAntiClockwise() {
+        
+        ArrayList<int[]> res = new ArrayList<int[]>();
+
+        // Figure out the shape
+        if (this.shape == Tetromino.None) {
+
+            res = this.coordinates;
+
+        } else if (this.shape == Tetromino.Line) {
+
+            // Third element
+            int[] third = this.coordinates.get(2);
+
+            // Figure out the direction
+            if (this.orientation == Direction.North || this.orientation == Direction.South) {
+
+                res.add(new int[] {third[0] - 2, third[1]});
+                res.add(new int[] {third[0] - 1, third[1]});
+                res.add(new int[] {third[0], third[1]});
+                res.add(new int[] {third[0] + 1, third[1]});
+
+            } else {
+                
+                res.add(new int[] {third[0], third[1] - 2});
+                res.add(new int[] {third[0], third[1] - 1});
+                res.add(new int[] {third[0], third[1]});
+                res.add(new int[] {third[0], third[1] + 1});
+
+            }
+
+        } else if (this.shape == Tetromino.L) {
+
+            // Second element
+            int[] second = this.coordinates.get(1);
+
+            // Figure out the direction
+            if (this.orientation == Direction.North) {
+
+                res.add(new int[] {second[0] - 1, second[1] - 1});
+                res.add(new int[] {second[0], second[1]});
+                res.add(new int[] {second[0], second[1] - 1});
+                res.add(new int[] {second[0], second[1] + 1});
+
+            } else if (this.orientation == Direction.East) {
+
+                res.add(new int[] {second[0] - 1, second[1]});
+                res.add(new int[] {second[0], second[1]});
+                res.add(new int[] {second[0] + 1, second[1]});
+                res.add(new int[] {second[0] + 1, second[1] - 1});
+
+            } else if (this.orientation == Direction.South) {
+
+                res.add(new int[] {second[0], second[1] - 1});
+                res.add(new int[] {second[0], second[1]});
+                res.add(new int[] {second[0], second[1] + 1});
+                res.add(new int[] {second[0] + 1, second[1] + 1});
+
+            } else {
+
+                res.add(new int[] {second[0] - 1, second[1] + 1});
+                res.add(new int[] {second[0], second[1]});
+                res.add(new int[] {second[0] - 1, second[1]});
+                res.add(new int[] {second[0] + 1, second[1]});
+
+            }
+
+        } else if (this.shape == Tetromino.MirroredL) {
+
+            // Second element
+            int[] second = this.coordinates.get(1);
+
+            // Figure out the direction
+            if (this.orientation == Direction.North) {
+
+                res.add(new int[] {second[0] - 1, second[1] + 1});
+                res.add(new int[] {second[0], second[1]});
+                res.add(new int[] {second[0], second[1] - 1});
+                res.add(new int[] {second[0], second[1] + 1});
+
+            } else if (this.orientation == Direction.East) {
+
+                res.add(new int[] {second[0] - 1, second[1]});
+                res.add(new int[] {second[0], second[1]});
+                res.add(new int[] {second[0] + 1, second[1]});
+                res.add(new int[] {second[0] - 1, second[1] - 1});
+
+            } else if (this.orientation == Direction.South) {
+
+                res.add(new int[] {second[0], second[1] - 1});
+                res.add(new int[] {second[0], second[1]});
+                res.add(new int[] {second[0], second[1] + 1});
+                res.add(new int[] {second[0] + 1, second[1] - 1});
+
+            } else {
+
+                res.add(new int[] {second[0] + 1, second[1] + 1});
+                res.add(new int[] {second[0], second[1]});
+                res.add(new int[] {second[0] - 1, second[1]});
+                res.add(new int[] {second[0] + 1, second[1]});
+
+            }
+
+        } else if (this.shape == Tetromino.Square) {
+
+            res = this.coordinates;
+
+        } else if (this.shape == Tetromino.S) {
+
+            // Second element
+            int[] second = this.coordinates.get(1);
+
+            // Figure out the direction
+            if (this.orientation == Direction.North || this.orientation == Direction.South) {
+
+                res.add(new int[] {second[0], second[1] - 1});
+                res.add(new int[] {second[0], second[1]});
+                res.add(new int[] {second[0] + 1, second[1]});
+                res.add(new int[] {second[0] + 1, second[1] + 1});
+
+            } else {
+                
+                res.add(new int[] {second[0] - 1, second[1]});
+                res.add(new int[] {second[0], second[1]});
+                res.add(new int[] {second[0], second[1] - 1});
+                res.add(new int[] {second[0] + 1, second[1] - 1});
+
+            }
+
+        } 
+
+        return res;
     }
 }
