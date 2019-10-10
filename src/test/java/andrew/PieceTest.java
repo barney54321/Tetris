@@ -6,6 +6,7 @@ package andrew;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import java.util.ArrayList;
+import java.awt.Color;
 
 public class PieceTest {
 
@@ -158,5 +159,40 @@ public class PieceTest {
         coordinates.add(new int[] {boardMiddle + 1, 3});
 
         assertTrue(checkLists(coordinates, p.getCoordinates()));
+    }
+
+    @Test
+    public void colourLine() {
+        Board b = new Board();
+        Piece p = new Piece(Tetromino.Line, 1, b);
+        assertEquals(Color.cyan, p.getColor());
+    }
+
+    @Test
+    public void colourL() {
+        Board b = new Board();
+        Piece p = new Piece(Tetromino.L, 1, b);
+        assertEquals(Color.orange, p.getColor());
+    }
+
+    @Test
+    public void colourMirroredL() {
+        Board b = new Board();
+        Piece p = new Piece(Tetromino.MirroredL, 1, b);
+        assertEquals(Color.blue, p.getColor());
+    }
+
+    @Test
+    public void colourSquare() {
+        Board b = new Board();
+        Piece p = new Piece(Tetromino.Square, 1, b);
+        assertEquals(Color.yellow, p.getColor());
+    }
+
+    @Test
+    public void colourS() {
+        Board b = new Board();
+        Piece p = new Piece(Tetromino.S, 1, b);
+        assertEquals(Color.green, p.getColor());
     }
 }
