@@ -9,12 +9,40 @@ import java.util.ArrayList;
 
 public class BoardTest {
 
+    public static boolean checkLists(ArrayList<int[]> a, ArrayList<int[]> b) {
+        boolean res = true;
+
+        if (a.size() != b.size()) {
+            return false;
+        }
+
+        for (int i = 0; i < a.size(); i++) {
+            for (int j = 0; j < a.get(i).length; j++) {
+                if (a.get(i)[j] != b.get(i)[j]) {
+                    res = false;
+                }
+            }
+        }
+
+        return res;
+    }
+
     @Test
     public void addPieceSimple() {
         Board b = new Board();
         Piece p = new Piece(Tetromino.Line, 1, b);
 
         assertTrue(b.addPiece(p));
+
+        ArrayList<int[]> coordinates = new ArrayList<int[]>();
+        int boardMiddle = b.getMatrix()[0].length / 2;
+        coordinates.add(new int[] {boardMiddle - 2, 3});
+        coordinates.add(new int[] {boardMiddle - 1, 3});
+        coordinates.add(new int[] {boardMiddle, 3});
+        coordinates.add(new int[] {boardMiddle + 1, 3});
+
+        assertTrue(checkLists(coordinates, p.getCoordinates()));
+
     }
 
     @Test
@@ -37,5 +65,42 @@ public class BoardTest {
 
         assertTrue(b.addPiece(p1));
         assertFalse(b.addPiece(p2));
+    }
+
+    @Test
+    public void moveActiveSimple() {
+        Board b = new Board();
+        Piece p = new Piece(Tetromino.L, 1, b);
+        b.addPiece(p);
+
+        ArrayList<int[]> coordinates = new ArrayList<int[]>();
+        for (int[] arr : p.getCoordinates()) {
+            coordinates.add(new int[] {arr[0], arr[1] + 1});
+        }
+
+        assertTrue(b.moveActive());
+        assertTrue(checkLists(coordinates, p.getCoordinates()));
+    }
+
+    @Test
+    public void moveActiveFail() {
+        Board b = new Board();
+        Piece p1 = new Piece(Tetromino.Line, 1, b);
+        b.addPiece(p1);
+        b.moveActive();
+
+        Piece p2 = new Piece(Tetromino.Line, 2, b);
+        b.addPiece(p2);
+
+        assertFalse(b.moveActive());
+    }
+
+    @Test
+    public void tickSimple() {
+        Board b = new Board();
+        Piece p = new Piece(Tetromino.L, 1, b);
+        b.addPiece(p);
+
+        b.tick();
     }
 }

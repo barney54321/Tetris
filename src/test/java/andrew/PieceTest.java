@@ -126,6 +126,21 @@ public class PieceTest {
     }
 
     @Test
+    public void canMoveDownFail() {
+        Board b = new Board();
+        
+        Piece p1 = new Piece(Tetromino.Line, 1, b);
+        b.addPiece(p1);
+        assertTrue(p1.canMoveDown());
+        assertTrue(b.moveActive());
+
+        Piece p2 = new Piece(Tetromino.Line, 2, b);
+        assertTrue(b.addPiece(p2));
+        assertFalse(p2.canMoveDown());
+
+    }
+
+    @Test
     public void canMoveLeftSimple() {
         Board b = new Board();
         Piece p = new Piece(Tetromino.Line, 1, b);
@@ -157,6 +172,22 @@ public class PieceTest {
         coordinates.add(new int[] {boardMiddle, 4});
         coordinates.add(new int[] {boardMiddle, 3});
         coordinates.add(new int[] {boardMiddle + 1, 3});
+
+        assertTrue(checkLists(coordinates, p.getCoordinates()));
+    }
+
+    @Test
+    public void moveDownSimpleLine() {
+        Board b = new Board();
+        Piece p = new Piece(Tetromino.Line, 1, b);
+        p.moveDown();
+
+        ArrayList<int[]> coordinates = new ArrayList<int[]>();
+        int boardMiddle = b.getMatrix()[0].length / 2;
+        coordinates.add(new int[] {boardMiddle - 2, 4});
+        coordinates.add(new int[] {boardMiddle - 1, 4});
+        coordinates.add(new int[] {boardMiddle, 4});
+        coordinates.add(new int[] {boardMiddle + 1, 4});
 
         assertTrue(checkLists(coordinates, p.getCoordinates()));
     }
