@@ -181,9 +181,46 @@ public class Board {
 
     }
 
+    public boolean checkRow(int[] row) {
+        // Returns true if row is not zero and
+        for (int i : row) {
+            if (i == 0 || i == this.activePiece.getId()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void clearRows() {
+
+        int removed = 0;
+
+        for (int i = 0; i < this.matrix.length - 1; i++) {
+            if (checkRow(this.matrix[i])) {
+
+                removed++;
+
+                // Remove the row
+                for (int j = i; j > 0; j--) {
+                    this.matrix[j] = this.matrix[j - 1]; 
+                }
+
+            }
+        }
+
+    }
+
     public void tick() {
+
         if (!this.moveActive()) {
+
             this.reset();
+
+        } else {
+
+            // Clear completed rows
+            this.clearRows();
+
         }
     }
 
@@ -210,7 +247,7 @@ public class Board {
 
     public void reset() {
 
-         this.matrix = new int[24][12];
+        this.matrix = new int[24][12];
 
         // Set bottom row as -1
         for (int i = 0; i < this.matrix[this.matrix.length - 1].length; i++) {
