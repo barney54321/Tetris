@@ -70,6 +70,15 @@ public class Board {
         return placed;
     }
 
+    public void drop() {
+
+        if (this.activePiece != null) {
+            while (this.activePiece.canMoveDown()) {
+                this.moveActive();
+            }
+        }
+    }
+
     public boolean moveActive() {
 
         if (this.activePiece != null && this.activePiece.canMoveDown()) {
@@ -289,6 +298,8 @@ public class Board {
                 if (this.activePiece.canRotateClockwise()) {
                     this.rotateClockwise();
                 }
+            } else if (key == InputType.Down) {
+                this.drop();
             }
 
         }

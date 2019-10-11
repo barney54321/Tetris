@@ -23,6 +23,8 @@ public class KeyInput extends KeyAdapter {
             this.board.input(InputType.RotateRight);
         } else if (key == KeyEvent.VK_DOWN || key == KeyEvent.VK_S) {
             this.board.input(InputType.RotateLeft);
+        } else if (key == KeyEvent.VK_SPACE) {
+            this.board.input(InputType.Down);
         } 
 
 	}
