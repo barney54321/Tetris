@@ -21,6 +21,7 @@ public class Board {
     private int currentId;
     private int score;
     private HashMap<Integer, Piece> pieceMap;
+    private GameState state;
 
     public Board() {
         this.matrix = new int[24][12];
@@ -41,6 +42,7 @@ public class Board {
         this.activePiece = null;
         this.pieceMap = new HashMap<Integer, Piece>();
         this.score = 0;
+        this.state = GameState.Pause;
     }
 
     public int[][] getMatrix() {
@@ -226,14 +228,18 @@ public class Board {
 
     public void tick() {
 
-        if (!this.moveActive()) {
+        if (this.state == GameState.Play) {
 
-            this.reset();
+            if (!this.moveActive()) {
 
-        } else {
+                this.reset();
 
-            // Clear completed rows
-            this.clearRows();
+            } else {
+
+                // Clear completed rows
+                this.clearRows();
+
+            }
 
         }
     }
@@ -284,7 +290,7 @@ public class Board {
 
     public void input(InputType key) {
 
-        if (this.activePiece != null) {
+        if (this.activePiece != null && this.state == GameState.Play) {
 
             if (key == InputType.Left) {
                 if (this.activePiece.canMoveLeft()) {
@@ -306,6 +312,14 @@ public class Board {
                 this.drop();
             }
 
+        }
+
+        if (key == InputType.Pause) {
+            if (this.state == GameState.Pause) {
+                this.state = GameState.Play;
+            } else {
+                this.state = GameState.Pause;
+            }
         }
 
     }
