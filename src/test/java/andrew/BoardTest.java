@@ -96,12 +96,42 @@ public class BoardTest {
     }
 
     @Test
-    public void tickSimple() {
+    public void tickPaused() {
         Board b = new Board();
-        Piece p = new Piece(Tetromino.L, 1, b);
+        Piece p = new Piece(Tetromino.Line, 1, b);
         b.addPiece(p);
 
         b.tick();
+
+        ArrayList<int[]> coordinates = new ArrayList<int[]>();
+        int boardMiddle = b.getMatrix()[0].length / 2;
+        int boardHeight = b.getMatrix().length;
+        coordinates.add(new int[] {boardMiddle - 2, 3});
+        coordinates.add(new int[] {boardMiddle - 1, 3});
+        coordinates.add(new int[] {boardMiddle, 3});
+        coordinates.add(new int[] {boardMiddle + 1, 3});
+
+        assertTrue(checkLists(coordinates, p.getCoordinates()));
+    }
+
+    @Test
+    public void tickSimple() {
+        Board b = new Board();
+        Piece p = new Piece(Tetromino.Line, 1, b);
+        b.input(InputType.Pause);
+        b.addPiece(p);
+
+        b.tick();
+
+        ArrayList<int[]> coordinates = new ArrayList<int[]>();
+        int boardMiddle = b.getMatrix()[0].length / 2;
+        int boardHeight = b.getMatrix().length;
+        coordinates.add(new int[] {boardMiddle - 2, 4});
+        coordinates.add(new int[] {boardMiddle - 1, 4});
+        coordinates.add(new int[] {boardMiddle, 4});
+        coordinates.add(new int[] {boardMiddle + 1, 4});
+
+        assertTrue(checkLists(coordinates, p.getCoordinates()));
     }
 
     @Test
@@ -198,5 +228,62 @@ public class BoardTest {
         b.input(InputType.Pause);
         b.input(InputType.Pause);
         b.input(InputType.Down);
+    }
+
+    @Test
+    public void scoreStart() {
+        Board b = new Board();
+        assertEquals(b.getScore(), 0);
+    }
+
+    @Test
+    public void checkRowSimple() {
+        Board b = new Board();
+        Piece p = new Piece(Tetromino.Line, 1, b);
+        b.addPiece(p);
+        int[] i = new int[] {2, 2, 2, 2, 2, 2, 2};
+        assertTrue(b.checkRow(i));
+    }
+
+    @Test
+    public void checkRowMoving() {
+        Board b = new Board();
+        Piece p = new Piece(Tetromino.Line, 1, b);
+        b.addPiece(p);
+        int[] i = new int[] {1, 2, 2, 2, 2, 2, 2};
+        assertFalse(b.checkRow(i));
+    }
+
+    @Test
+    public void checkRowEmpty() {
+        Board b = new Board();
+        Piece p = new Piece(Tetromino.Line, 1, b);
+        b.addPiece(p);
+        int[] i = new int[] {0, 0, 0, 0, 0, 0, 0};
+        assertFalse(b.checkRow(i));
+    }
+
+    @Test
+    public void clearRowsSimple() {
+        Board b = new Board();
+        Piece p = new Piece(Tetromino.Line, 1, b);
+        b.addPiece(p);
+        
+        int[][] matrix = b.getMatrix();
+
+        for (int i = 0; i < matrix[5].length; i++) {
+            matrix[5][i] = 5;
+        }
+
+        b.clearRows();
+
+        assertEquals(matrix[5][0], -1);
+        assertEquals(matrix[5][matrix[5].length - 1], -1);
+
+        for (int i = 1; i < matrix[5].length - 1; i++) {
+            assertEquals(matrix[5][i], 0);
+        }
+
+        assertEquals(b.getScore(), 100);
     }
 }
