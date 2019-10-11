@@ -62,7 +62,7 @@ public class Game extends Canvas implements Runnable {
 			}
 			frames++;
 
-			amountOfTicks = 4 + this.board.getScore() / 200.0;
+			amountOfTicks = 4 + this.board.getScore() / 350.0;
 
 			if(System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
