@@ -128,4 +128,75 @@ public class BoardTest {
             assertArrayEquals(matrix[i], b.getMatrix()[i]);
         }
     }
+
+    @Test
+    public void dropSimple() {
+        Board b = new Board();
+        Piece p = new Piece(Tetromino.Line, 1, b);
+        b.addPiece(p);
+        b.drop();
+
+        ArrayList<int[]> coordinates = new ArrayList<int[]>();
+        int boardMiddle = b.getMatrix()[0].length / 2;
+        int boardHeight = b.getMatrix().length;
+        coordinates.add(new int[] {boardMiddle - 2, boardHeight - 2});
+        coordinates.add(new int[] {boardMiddle - 1, boardHeight - 2});
+        coordinates.add(new int[] {boardMiddle, boardHeight - 2});
+        coordinates.add(new int[] {boardMiddle + 1, boardHeight - 2});
+
+        assertTrue(checkLists(coordinates, p.getCoordinates()));
+    }
+
+    @Test
+    public void dropNull() {
+        Board b = new Board();
+        b.drop();
+    }
+
+    @Test
+    public void inputDrop() {
+        Board b = new Board();
+        Piece p = new Piece(Tetromino.Line, 1, b);
+        b.addPiece(p);
+        b.input(InputType.Pause);
+        b.input(InputType.Down);
+
+        ArrayList<int[]> coordinates = new ArrayList<int[]>();
+        int boardMiddle = b.getMatrix()[0].length / 2;
+        int boardHeight = b.getMatrix().length;
+        coordinates.add(new int[] {boardMiddle - 2, boardHeight - 2});
+        coordinates.add(new int[] {boardMiddle - 1, boardHeight - 2});
+        coordinates.add(new int[] {boardMiddle, boardHeight - 2});
+        coordinates.add(new int[] {boardMiddle + 1, boardHeight - 2});
+
+        assertTrue(checkLists(coordinates, p.getCoordinates()));
+    }
+
+    @Test
+    public void inputPause() {
+        Board b = new Board();
+        Piece p = new Piece(Tetromino.Line, 1, b);
+        b.addPiece(p);
+        b.input(InputType.Pause);
+        b.input(InputType.Pause);
+        b.input(InputType.Down);
+
+        ArrayList<int[]> coordinates = new ArrayList<int[]>();
+        int boardMiddle = b.getMatrix()[0].length / 2;
+        int boardHeight = b.getMatrix().length;
+        coordinates.add(new int[] {boardMiddle - 2, 3});
+        coordinates.add(new int[] {boardMiddle - 1, 3});
+        coordinates.add(new int[] {boardMiddle, 3});
+        coordinates.add(new int[] {boardMiddle + 1, 3});
+
+        assertTrue(checkLists(coordinates, p.getCoordinates()));
+    }
+
+    @Test
+    public void inputNull() {
+        Board b = new Board();
+        b.input(InputType.Pause);
+        b.input(InputType.Pause);
+        b.input(InputType.Down);
+    }
 }
