@@ -70,7 +70,7 @@ public class Board {
 
     public boolean moveActive() {
 
-        if (this.activePiece.canMoveDown()) {
+        if (this.activePiece != null && this.activePiece.canMoveDown()) {
 
             // Save copy of old coordinates
             ArrayList<int[]> old = new ArrayList<int[]>();
