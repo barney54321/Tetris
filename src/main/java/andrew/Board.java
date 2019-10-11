@@ -47,6 +47,10 @@ public class Board {
         return this.matrix;
     }
 
+    public int getScore() {
+        return this.score;
+    }
+
     public boolean addPiece(Piece piece) {
 
         boolean placed = true;

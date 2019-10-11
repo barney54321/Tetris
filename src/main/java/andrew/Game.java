@@ -49,6 +49,7 @@ public class Game extends Canvas implements Runnable {
 		long timer = System.currentTimeMillis();
 		int frames = 0;
 		while(running) {
+			ns = 1000000000 / amountOfTicks;
 			long now = System.nanoTime();
 			delta += (now - lastTime) / ns;
 			lastTime = now;
@@ -60,6 +61,8 @@ public class Game extends Canvas implements Runnable {
 				render();
 			}
 			frames++;
+
+			amountOfTicks = 4 + this.board.getScore() / 200.0;
 
 			if(System.currentTimeMillis() - timer > 1000) {
 				timer += 1000;
