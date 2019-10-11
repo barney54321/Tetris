@@ -264,7 +264,6 @@ public class Board {
         this.currentId = 2;
         this.activePiece = null;
         this.pieceMap = new HashMap<Integer, Piece>();
-        this.addPiece(new Piece(Tetromino.Line, 1, this));
 
     }
 

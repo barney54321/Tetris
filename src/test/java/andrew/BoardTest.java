@@ -103,4 +103,29 @@ public class BoardTest {
 
         b.tick();
     }
+
+    @Test
+    public void resetSimple() {
+        Board b = new Board();
+        Piece p = new Piece(Tetromino.L, 1, b);
+        b.addPiece(p);
+
+        b.reset();
+        int[][] matrix = new int[24][12];
+
+        // Set bottom row as -1
+        for (int i = 0; i < matrix[matrix.length - 1].length; i++) {
+            matrix[matrix.length - 1][i] = -1;
+        }
+
+        // Set left and right columns as -1
+        for (int i = 0; i < matrix.length; i++) {
+            matrix[i][0] = -1;
+            matrix[i][matrix[i].length - 1] = -1;
+        }
+
+        for (int i = 0; i < matrix.length; i++) {
+            assertArrayEquals(matrix[i], b.getMatrix()[i]);
+        }
+    }
 }
