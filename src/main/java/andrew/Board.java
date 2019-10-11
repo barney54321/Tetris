@@ -19,6 +19,7 @@ public class Board {
     private ArrayList<Piece> pieces;
     private Piece activePiece;
     private int currentId;
+    private int score;
     private HashMap<Integer, Piece> pieceMap;
 
     public Board() {
@@ -39,6 +40,7 @@ public class Board {
         this.currentId = 2;
         this.activePiece = null;
         this.pieceMap = new HashMap<Integer, Piece>();
+        this.score = 0;
     }
 
     public int[][] getMatrix() {
@@ -108,6 +110,7 @@ public class Board {
         Tetromino next = possible[r.nextInt(possible.length)];
         boolean res = this.addPiece(new Piece(next, this.currentId, this));
         this.currentId++;
+        this.score += 5;
 
         return res;
 
@@ -193,12 +196,10 @@ public class Board {
 
     public void clearRows() {
 
-        int removed = 0;
-
         for (int i = 0; i < this.matrix.length - 1; i++) {
             if (checkRow(this.matrix[i])) {
 
-                removed++;
+                this.score += 100;
 
                 // Remove the row
                 for (int j = i; j > 0; j--) {
@@ -227,9 +228,9 @@ public class Board {
     public void render(Graphics g) {
 
         g.setColor(Color.white);
-        Font fnt = new Font("arial",1,60);
+        Font fnt = new Font("arial",1,20);
         g.setFont(fnt);
-        g.drawString("Tetris", 55, 50);
+        g.drawString(this.score + "", 40, 20);
 
         // Draw board
         for (int i = 0; i < 20; i++) {
@@ -264,6 +265,7 @@ public class Board {
         this.currentId = 2;
         this.activePiece = null;
         this.pieceMap = new HashMap<Integer, Piece>();
+        this.score = 0;
 
     }
 
