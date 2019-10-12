@@ -1,5 +1,5 @@
 Allow player to store a piece
-Show what next piece is
+Show what next piece is - graphically, not text
 Fix weird game over bug
 Improve UI
 Add more piece types

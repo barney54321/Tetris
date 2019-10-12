@@ -22,6 +22,7 @@ public class Board {
     private int score;
     private HashMap<Integer, Piece> pieceMap;
     private GameState state;
+    private Tetromino nextPiece;
 
     public Board() {
         this.matrix = new int[24][12];
@@ -43,6 +44,7 @@ public class Board {
         this.pieceMap = new HashMap<Integer, Piece>();
         this.score = 0;
         this.state = GameState.Pause;
+        this.nextPiece = Tetromino.Square;
     }
 
     public int[][] getMatrix() {
@@ -120,10 +122,10 @@ public class Board {
 
         }
 
+        boolean res = this.addPiece(new Piece(this.nextPiece, this.currentId, this));
         Tetromino[] possible = Tetromino.values();
         Random r = new Random();
-        Tetromino next = possible[r.nextInt(possible.length)];
-        boolean res = this.addPiece(new Piece(next, this.currentId, this));
+        this.nextPiece = possible[r.nextInt(possible.length - 1) + 1];
         this.currentId++;
         this.score += 5;
 
@@ -242,6 +244,8 @@ public class Board {
             }
 
         }
+
+        System.out.println(this.nextPiece);
     }
 
     public void render(Graphics g) {
@@ -250,6 +254,7 @@ public class Board {
         Font fnt = new Font("arial",1,20);
         g.setFont(fnt);
         g.drawString(this.score + "", 40, 20);
+        g.drawString(this.nextPiece + "", 40, 50);
 
         // Draw board
         for (int i = 0; i < 20; i++) {
@@ -261,6 +266,13 @@ public class Board {
                     g.fillRect(41 + 20 * j, 61 + 20 * i, 17, 17);
                 }
             }
+        }
+
+        if (this.state == GameState.Pause) {
+            g.setColor(Color.white);
+            fnt = new Font("arial",1,60);
+            g.setFont(fnt);
+            g.drawString("Paused", 40, 300);
         }
 
     }
@@ -285,6 +297,7 @@ public class Board {
         this.activePiece = null;
         this.pieceMap = new HashMap<Integer, Piece>();
         this.score = 0;
+        this.nextPiece = Tetromino.Square;
 
     }
 
