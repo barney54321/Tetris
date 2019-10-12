@@ -6,5 +6,7 @@ public enum Tetromino {
     L,
     MirroredL,
     Square,
-    S;
+    T,
+    S,
+    MirroredS;
 }
