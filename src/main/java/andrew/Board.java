@@ -23,6 +23,7 @@ public class Board {
     private HashMap<Integer, Piece> pieceMap;
     private GameState state;
     private Tetromino nextPiece;
+    private Tetromino storedPiece;
 
     public Board() {
         this.matrix = new int[24][12];
@@ -45,6 +46,7 @@ public class Board {
         this.score = 0;
         this.state = GameState.Pause;
         this.nextPiece = Tetromino.Square;
+        this.storedPiece = Tetromino.None;
     }
 
     public int[][] getMatrix() {
@@ -242,10 +244,7 @@ public class Board {
                 this.clearRows();
 
             }
-
         }
-
-        System.out.println(this.nextPiece);
     }
 
     public void render(Graphics g) {
@@ -255,6 +254,10 @@ public class Board {
         g.setFont(fnt);
         g.drawString(this.score + "", 40, 20);
         g.drawString(this.nextPiece + "", 40, 50);
+
+        if (this.storedPiece != Tetromino.None) {
+            g.drawString(this.storedPiece + "", 200, 50);
+        }
 
         // Draw board
         for (int i = 0; i < 20; i++) {
@@ -298,7 +301,45 @@ public class Board {
         this.pieceMap = new HashMap<Integer, Piece>();
         this.score = 0;
         this.nextPiece = Tetromino.Square;
+        this.storedPiece = Tetromino.None;
 
+    }
+
+    private void removeCurrent() {
+        int id = this.activePiece.getId();
+        for (int[] row : this.matrix) {
+            for (int i = 0; i < row.length; i++) {
+                if (row[i] == id) {
+                    row[i] = 0;
+                }
+            }
+        }
+        
+        this.pieces.remove(this.activePiece);
+        this.pieceMap.remove(id);
+
+        this.activePiece = null;
+    }
+
+    private void store() {
+        Tetromino prevStored = this.storedPiece;
+        this.storedPiece = this.activePiece.getShape();
+        this.removeCurrent();
+
+        if (prevStored == Tetromino.None) {
+
+            this.addPiece(new Piece(this.nextPiece, this.currentId, this));
+            Tetromino[] possible = Tetromino.values();
+            Random r = new Random();
+            this.nextPiece = possible[r.nextInt(possible.length - 1) + 1];
+            this.currentId++;
+            
+        } else {
+
+            this.addPiece(new Piece(prevStored, this.currentId, this));
+            this.currentId++;
+
+        }
     }
 
     public void input(InputType key) {
@@ -323,6 +364,8 @@ public class Board {
                 }
             } else if (key == InputType.Down) {
                 this.drop();
+            } else if (key == InputType.Store) {
+                this.store();
             }
 
         }

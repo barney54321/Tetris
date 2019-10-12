@@ -95,6 +95,10 @@ public class Piece {
         return this.id;
     }
 
+    public Tetromino getShape() {
+        return this.shape;
+    }
+
     public boolean canMoveDown() {
 
         boolean canMove = true;

@@ -6,5 +6,6 @@ public enum InputType {
     Down,
     RotateLeft,
     RotateRight,
+    Store,
     Pause;
 }

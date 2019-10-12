@@ -1,8 +1,7 @@
-Allow player to store a piece
-Show what next piece is - graphically, not text
 Fix weird game over bug
 Improve UI
 Add more piece types
+Allow rotation while on side of screen
 Create start screen
 Music?
 Remove pieces from memory when all blocks are cleared

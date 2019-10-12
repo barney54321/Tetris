@@ -27,6 +27,8 @@ public class KeyInput extends KeyAdapter {
             this.board.input(InputType.Down);
         } else if (key == KeyEvent.VK_P) {
             this.board.input(InputType.Pause);
+        } else if (key == KeyEvent.VK_CONTROL) {
+            this.board.input(InputType.Store);
         } 
 
 	}
