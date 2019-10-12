@@ -1,10 +1,10 @@
-Test rotations
-Test moving left and right
-Remove pieces from memory when all blocks are cleared
-Improve UI
-Create start screen
-Music?
-Add more piece types
 Allow player to store a piece
 Show what next piece is
 Fix weird game over bug
+Improve UI
+Add more piece types
+Create start screen
+Music?
+Remove pieces from memory when all blocks are cleared
+Test rotations
+Test moving left and right
